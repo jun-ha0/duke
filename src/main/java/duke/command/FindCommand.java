@@ -23,16 +23,15 @@ public class FindCommand extends Command {
     /**
      * Executes finding of matching tasks.
      *
-     * @param taskList list of tasks.
+     * @param dukeResponse response from Duke to user.
+     *  @param taskList list of tasks.
      * @param storage local storage of data.
      */
     @Override
-    public String execute(TaskList taskList, Storage storage) throws DukeException {
-        StringBuilder output = new StringBuilder(String.format(Message.MESSAGE_SHOW_TASK_LIST, " matching"));
-        for (String taskName : taskList.getTaskNamesIfMatch(this.keyword)) {
-            output.append("\n");
-            output.append(taskName);
+    public void execute(DukeResponse dukeResponse, TaskList taskList, Storage storage) throws DukeException {
+        dukeResponse.add(String.format(Message.MESSAGE_SHOW_TASK_LIST, " matching"));
+        for (String taskName : taskList.getTaskNamesIfMatch(keyword)) {
+            dukeResponse.add(taskName);
         }
-        return output.toString();
     }
 }

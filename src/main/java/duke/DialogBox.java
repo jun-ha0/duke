@@ -36,6 +36,7 @@ public class DialogBox extends HBox {
         }
 
         dialog.setText(text);
+        dialog.setMinHeight(Label.USE_PREF_SIZE);
         displayPicture.setImage(img);
     }
 
@@ -49,14 +50,27 @@ public class DialogBox extends HBox {
         setAlignment(Pos.TOP_LEFT);
     }
 
+    /**
+     * Returns a DialogBox with ImageView to represent the user's face and a label containing text from the user.
+     *
+     * @param text text from the user.
+     * @param img ImageView representing the user's face.
+     * @return DialogBox with ImageView to represent the user's face and a label containing text from the user.
+     */
     public static DialogBox getUserDialog(String text, Image img) {
         return new DialogBox(text, img);
     }
 
+    /**
+     * Returns a DialogBox with ImageView to represent Duke's face and a label containing text from Duke.
+     *
+     * @param text text from Duke.
+     * @param img ImageView representing Duke's face.
+     * @return DialogBox with ImageView to represent Duke's face and a label containing text from Duke.
+     */
     public static DialogBox getDukeDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
-        db.setMinHeight(200);
         return db;
     }
 }

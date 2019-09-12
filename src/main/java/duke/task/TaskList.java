@@ -31,7 +31,7 @@ public class TaskList {
      * @return size of this task list.
      */
     public int size() {
-        return this.tasks.size();
+        return tasks.size();
     }
 
     /**
@@ -41,7 +41,7 @@ public class TaskList {
      */
     public void addTask(Task task) {
         assert task != null;
-        this.tasks.add(task);
+        tasks.add(task);
     }
 
     /**
@@ -51,7 +51,7 @@ public class TaskList {
      * @return the task of the given index.
      */
     public Task markDone(int index) {
-        Task task = this.tasks.get(index - 1);
+        Task task = tasks.get(index - 1);
         assert task != null;
         task.setDone(true);
         return task;
@@ -64,9 +64,9 @@ public class TaskList {
      * @return the task being deleted.
      */
     public Task delete(int index) {
-        Task task = this.tasks.get(index - 1);
+        Task task = tasks.get(index - 1);
         assert task != null;
-        this.tasks.remove(index - 1);
+        tasks.remove(index - 1);
         return task;
     }
 

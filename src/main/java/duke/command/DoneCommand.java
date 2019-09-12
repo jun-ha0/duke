@@ -24,17 +24,19 @@ public class DoneCommand extends Command {
     /**
      * Executes marking of a task as done.
      *
-     * @param taskList list of tasks.
+     * @param dukeResponse response from Duke to user.
+     *  @param taskList list of tasks.
      * @param storage local storage of data.
      */
     @Override
-    public String execute(TaskList taskList, Storage storage) throws DukeException {
+    public void execute(DukeResponse dukeResponse, TaskList taskList, Storage storage) throws DukeException {
         if (index <= 0 || index > taskList.size()) {
             throw new DukeException(Message.MESSAGE_INVALID_TASK_INDEX);
         }
         Task task = taskList.markDone(index);
         assert task != null;
         storage.save(taskList.getSimplifiedTaskRepresentations());
-        return Message.MESSAGE_MARK_DONE + "\n " + task;
+        dukeResponse.add(Message.MESSAGE_MARK_DONE);
+        dukeResponse.add(" " + task);
     }
 }

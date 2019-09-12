@@ -24,16 +24,17 @@ public class AddCommand extends Command {
     /**
      * Executes addition of a task.
      *
+     * @param dukeResponse response from Duke to user.
      * @param taskList list of tasks.
      * @param storage local storage of data.
-     * @return message showing the successful addition of a task.
      */
     @Override
-    public String execute(TaskList taskList, Storage storage) throws DukeException {
+    public void execute(DukeResponse dukeResponse, TaskList taskList, Storage storage) throws DukeException {
         assert task != null;
         taskList.addTask(task);
         storage.save(task.getSimplifiedRepresentation());
-        return Message.MESSAGE_ADDED + "\n " + task + "\n"
-                + String.format(Message.MESSAGE_SHOW_TASK_SIZE, taskList.size());
+        dukeResponse.add(Message.MESSAGE_ADDED);
+        dukeResponse.add(" " + task);
+        dukeResponse.add(String.format(Message.MESSAGE_SHOW_TASK_SIZE, taskList.size()));
     }
 }

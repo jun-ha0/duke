@@ -24,19 +24,20 @@ public class DeleteCommand extends Command {
     /**
      * Executes deletion of a task.
      *
+     * @param dukeResponse response from Duke to user.
      * @param taskList list of tasks.
      * @param storage local storage of data.
-     * @return message showing the successful deletion of a task.
      */
     @Override
-    public String execute(TaskList taskList, Storage storage) throws DukeException {
+    public void execute(DukeResponse dukeResponse, TaskList taskList, Storage storage) throws DukeException {
         if (index <= 0 || index > taskList.size()) {
             throw new DukeException(Message.MESSAGE_INVALID_TASK_INDEX);
         }
         Task task = taskList.delete(index);
         assert task != null;
         storage.save(taskList.getSimplifiedTaskRepresentations());
-        return Message.MESSAGE_DELETED + "\n " + task + "\n"
-                + String.format(Message.MESSAGE_SHOW_TASK_SIZE, taskList.size());
+        dukeResponse.add(Message.MESSAGE_DELETED);
+        dukeResponse.add(" " + task);
+        dukeResponse.add(String.format(Message.MESSAGE_SHOW_TASK_SIZE, taskList.size()));
     }
 }

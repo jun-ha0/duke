@@ -12,12 +12,12 @@ public class ExitCommand extends Command {
     /**
      * Executes exit program.
      *
+     * @param dukeResponse response from Duke to user.
      * @param taskList list of tasks.
      * @param storage local storage of data.
-     * @return exit message.
      */
     @Override
-    public String execute(TaskList taskList, Storage storage) throws DukeException {
-        return Message.MESSAGE_BYE;
+    public void execute(DukeResponse dukeResponse, TaskList taskList, Storage storage) throws DukeException {
+        dukeResponse.add(Message.MESSAGE_BYE);
     }
 }

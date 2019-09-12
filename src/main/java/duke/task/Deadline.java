@@ -3,21 +3,23 @@ package duke.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import duke.parser.Parser;
+
 /**
  * Represents a deadline which is a task needed to be done by a given date and time.
  */
 public class Deadline extends Task {
-    private LocalDateTime by;
+    private LocalDateTime deadlineDateTime;
 
     /**
      *  Constructs a deadline by a given date and time with a description.
      *
      * @param description description of deadline.
-     * @param by date and time of deadline.
+     * @param deadlineDateTime date and time of deadline.
      */
-    public Deadline(String description, LocalDateTime by) {
+    public Deadline(String description, LocalDateTime deadlineDateTime) {
         super(description);
-        this.by = by;
+        this.deadlineDateTime = deadlineDateTime;
     }
 
     /**
@@ -28,7 +30,7 @@ public class Deadline extends Task {
     @Override
     public String getSimplifiedRepresentation() {
         return "D | " + (super.isDone ? 1 : 0) + " | " + super.taskName + " | "
-                + DateTimeFormatter.ofPattern("d/M/yyyy HHmm").format(this.by);
+                + DateTimeFormatter.ofPattern("d/M/yyyy HHmm").format(deadlineDateTime);
     }
 
     /**
@@ -38,12 +40,6 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + (this.by.getDayOfMonth() % 10 == 1
-                ? DateTimeFormatter.ofPattern("d'st of' MMMM yyyy, h.mma").format(this.by)
-                : this.by.getDayOfMonth() % 10 == 2
-                    ? DateTimeFormatter.ofPattern("d'nd of' MMMM yyyy, h.mma").format(this.by)
-                    : this.by.getDayOfMonth() % 10 == 3
-                        ? DateTimeFormatter.ofPattern("d'rd of' MMMM yyyy, h.mma").format(this.by)
-                        : DateTimeFormatter.ofPattern("d'th of' MMMM yyyy, h.mma").format(this.by)) + ")";
+        return "[D]" + super.toString() + " (by: " + Parser.getFormattedDateTimeFrom(deadlineDateTime) + ")";
     }
 }

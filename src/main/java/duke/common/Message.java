@@ -24,4 +24,10 @@ public class Message {
     public static final String MESSAGE_ERROR_READING_FROM_FILE = "Error when reading file";
     public static final String MESSAGE_INVALID_DATE_FORMAT = "Invalid date. Use d/M/yyyy HHmm (2/12/2019 1800) format.";
     public static final String MESSAGE_BYE = "Bye. Hope to see you again soon!";
+    public static final String LOGO = " ____        _        \n"
+            + "|  _ \\ _   _| | _____ \n"
+            + "| | | | | | | |/ / _ \\\n"
+            + "| |_| | |_| |   <  __/\n"
+            + "|____/ \\__,_|_|\\_\\___|\n";
+
 }

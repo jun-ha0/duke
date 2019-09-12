@@ -12,16 +12,15 @@ public class ListCommand extends Command {
     /**
      * Executes listing of task list.
      *
-     * @param taskList list of tasks.
+     * @param dukeResponse response from Duke to user.
+     *  @param taskList list of tasks.
      * @param storage local storage of data.
      */
     @Override
-    public String execute(TaskList taskList, Storage storage) throws DukeException {
-        StringBuilder output = new StringBuilder(String.format(Message.MESSAGE_SHOW_TASK_LIST, ""));
+    public void execute(DukeResponse dukeResponse, TaskList taskList, Storage storage) throws DukeException {
+        dukeResponse.add(String.format(Message.MESSAGE_SHOW_TASK_LIST, ""));
         for (String taskName : taskList.getTaskNames()) {
-            output.append("\n");
-            output.append(taskName);
+            dukeResponse.add(taskName);
         }
-        return output.toString();
     }
 }

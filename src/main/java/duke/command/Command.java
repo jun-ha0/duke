@@ -11,8 +11,9 @@ public abstract class Command {
     /**
      * Executes the command.
      *
-     * @param taskList list of tasks.
+     * @param dukeResponse response from Duke to user.
+     *  @param taskList list of tasks.
      * @param storage local storage of data.
      */
-    public abstract String execute(TaskList taskList, Storage storage) throws DukeException;
+    public abstract void execute(DukeResponse dukeResponse, TaskList taskList, Storage storage) throws DukeException;
 }

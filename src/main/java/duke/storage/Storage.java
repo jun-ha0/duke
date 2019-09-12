@@ -20,13 +20,13 @@ import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
-import duke.ui.UserInterface;
 
 /**
  * Represents local storage of data from Duke application.
  */
 public class Storage {
     private final String filePath;
+    public static final String LINE_PREFIX = "     ";
 
     /**
      * Constructor of data storage at a given file.
@@ -81,7 +81,7 @@ public class Storage {
      * Creates task from reading and parsing the lines in the storage file.
      *
      * @param storageLine lines in the storage file.
-     * @return task.
+     * @return task created.
      * @throws DukeException if there were errors reading data from file.
      */
     private Task createTaskFrom(String storageLine) throws DukeException {
@@ -96,14 +96,14 @@ public class Storage {
                 task = new Todo(description);
                 break;
             case "D":
-                LocalDateTime by = LocalDateTime.parse(taskPart[3].strip(),
+                LocalDateTime deadlineDateTime = LocalDateTime.parse(taskPart[3].strip(),
                         DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
-                task = new Deadline(description, by);
+                task = new Deadline(description, deadlineDateTime);
                 break;
             case "E":
-                LocalDateTime at = LocalDateTime.parse(taskPart[3].strip(),
+                LocalDateTime eventDateTime = LocalDateTime.parse(taskPart[3].strip(),
                         DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
-                task = new Event(description, at);
+                task = new Event(description, eventDateTime);
                 break;
             default:
                 throw new DukeException(MESSAGE_ERROR_READING_FROM_FILE);
@@ -126,10 +126,10 @@ public class Storage {
         if (storageFile.exists()) {
             return;
         }
-        System.out.println(String.format(MESSAGE_ERROR_MISSING_STORAGE_FILE, UserInterface.LINE_PREFIX, filePath));
+        System.out.println(String.format(MESSAGE_ERROR_MISSING_STORAGE_FILE, LINE_PREFIX, filePath));
         try {
             storageFile.createNewFile();
-            System.out.println(String.format(MESSAGE_STORAGE_FILE_CREATED, UserInterface.LINE_PREFIX,filePath));
+            System.out.println(String.format(MESSAGE_STORAGE_FILE_CREATED, LINE_PREFIX,filePath));
         } catch (IOException ioe) {
             throw new DukeException(String.format(MESSAGE_ERROR_CREATING_STORAGE_FILE, filePath, ioe.getMessage()));
         }
@@ -147,7 +147,7 @@ public class Storage {
      */
     public void save(List<String> simplifiedTaskRepresentations) throws DukeException {
         try {
-            FileWriter fileWriter = new FileWriter(this.filePath);
+            FileWriter fileWriter = new FileWriter(filePath);
             for (String simplifiedTaskRepresentation : simplifiedTaskRepresentations) {
                 fileWriter.write(simplifiedTaskRepresentation + "\n");
             }
@@ -165,7 +165,7 @@ public class Storage {
      */
     public void save(String simplifiedTaskRepresentation) throws DukeException {
         try {
-            FileWriter fileWriter = new FileWriter(this.filePath, true);
+            FileWriter fileWriter = new FileWriter(filePath, true);
             fileWriter.write(simplifiedTaskRepresentation + "\n");
             fileWriter.close();
         } catch (IOException ioe) {

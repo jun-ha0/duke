@@ -78,9 +78,9 @@ public class Parser {
             if (deadlineDescription.isEmpty()) {
                 throw new DukeException(Message.MESSAGE_INVALID_DEADLINE_FORMAT);
             }
-            LocalDateTime by = LocalDateTime.parse(deadlinePart[1].strip(),
+            LocalDateTime deadlineDateTime = LocalDateTime.parse(deadlinePart[1].strip(),
                     DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
-            return new Deadline(deadlineDescription, by);
+            return new Deadline(deadlineDescription, deadlineDateTime);
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new DukeException(Message.MESSAGE_INVALID_DEADLINE_FORMAT);
         } catch (java.time.format.DateTimeParseException e) {
@@ -95,9 +95,9 @@ public class Parser {
             if (eventDescription.isEmpty()) {
                 throw new DukeException(Message.MESSAGE_INVALID_EVENT_FORMAT);
             }
-            LocalDateTime at = LocalDateTime.parse(eventPart[1].strip(),
+            LocalDateTime eventDateTime = LocalDateTime.parse(eventPart[1].strip(),
                     DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
-            return new Event(eventDescription, at);
+            return new Event(eventDescription, eventDateTime);
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new DukeException(Message.MESSAGE_INVALID_EVENT_FORMAT);
         } catch (java.time.format.DateTimeParseException e) {
@@ -111,5 +111,25 @@ public class Parser {
             throw new DukeException(Message.MESSAGE_INVALID_KEYWORD_FORMAT);
         }
         return keyword;
+    }
+
+    /**
+     * Returns formatted date and time of task depending whether it is the 1st, 2nd, 3rd days of the month.
+     *
+     * @param dateTime Date and time of task.
+     * @return formatted date and time of task.
+     */
+    public static String getFormattedDateTimeFrom(LocalDateTime dateTime) {
+        String formattedDateTime = "";
+        if (dateTime.getDayOfMonth() % 10 == 1) {
+            formattedDateTime = DateTimeFormatter.ofPattern("d'st of' MMMM yyyy, h.mma").format(dateTime);
+        } else if (dateTime.getDayOfMonth() % 10 == 2) {
+            formattedDateTime = DateTimeFormatter.ofPattern("d'nd of' MMMM yyyy, h.mma").format(dateTime);
+        } else if (dateTime.getDayOfMonth() % 10 == 3) {
+            formattedDateTime = DateTimeFormatter.ofPattern("d'rd of' MMMM yyyy, h.mma").format(dateTime);
+        } else {
+            formattedDateTime = DateTimeFormatter.ofPattern("d'th of' MMMM yyyy, h.mma").format(dateTime);
+        }
+        return formattedDateTime;
     }
 }

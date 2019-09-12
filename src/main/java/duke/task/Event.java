@@ -3,21 +3,23 @@ package duke.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import duke.parser.Parser;
+
 /**
  * Represents an event at a given date and time.
  */
 public class Event extends Task {
-    private LocalDateTime at;
+    private LocalDateTime eventDateTime;
 
     /**
      * Constructs an event at a given date and time with a description.
      *
      * @param description description of event.
-     * @param at date and time of event.
+     * @param eventDateTime date and time of event.
      */
-    public Event(String description, LocalDateTime at) {
+    public Event(String description, LocalDateTime eventDateTime) {
         super(description);
-        this.at = at;
+        this.eventDateTime = eventDateTime;
     }
 
     /**
@@ -28,7 +30,7 @@ public class Event extends Task {
     @Override
     public String getSimplifiedRepresentation() {
         return "E | " + (super.isDone ? 1 : 0) + " | " + super.taskName + " | "
-                + DateTimeFormatter.ofPattern("d/M/yyyy HHmm").format(this.at);
+                + DateTimeFormatter.ofPattern("d/M/yyyy HHmm").format(eventDateTime);
     }
 
     /**
@@ -38,12 +40,6 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (at: " + (this.at.getDayOfMonth() % 10 == 1
-                ? DateTimeFormatter.ofPattern("d'st of' MMMM yyyy, h.mma").format(this.at)
-                : this.at.getDayOfMonth() % 10 == 2
-                    ? DateTimeFormatter.ofPattern("d'nd of' MMMM yyyy, h.mma").format(this.at)
-                    : this.at.getDayOfMonth() % 10 == 3
-                        ? DateTimeFormatter.ofPattern("d'rd of' MMMM yyyy, h.mma").format(this.at)
-                        : DateTimeFormatter.ofPattern("d'th of' MMMM yyyy, h.mma").format(this.at)) + ")";
+        return "[E]" + super.toString() + " (at: " + Parser.getFormattedDateTimeFrom(eventDateTime) + ")";
     }
 }
