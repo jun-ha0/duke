@@ -20,7 +20,7 @@ public class ListCommand extends Command {
     public void execute(DukeResponse dukeResponse, TaskList taskList, Storage storage) throws DukeException {
         dukeResponse.add(String.format(Message.MESSAGE_SHOW_TASK_LIST, ""));
         for (String taskName : taskList.getTaskNames()) {
-            dukeResponse.add(taskName);
+            dukeResponse.add(taskName + "\n");
         }
     }
 }

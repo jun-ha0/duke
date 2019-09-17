@@ -29,14 +29,18 @@ public class Duke {
         } catch (DukeException e) {
             System.out.println("OOPS!!! " + e.getMessage());
             taskList = new TaskList();
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    System.exit(0);
-                }
-            }, 250);
+            exit();
         }
+    }
+
+    void exit() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.exit(0);
+            }
+        }, 250);
     }
 
     /**
